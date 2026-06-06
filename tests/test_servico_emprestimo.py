@@ -124,3 +124,51 @@ def test_listar_atrasados(
     )
 
     assert len(atrasados) == 1
+
+
+def test_usuario_com_dois_emprestimos_ativos_nao_pode_registrar_terceiro(
+    servico
+):
+
+    servico.registrar(
+        1,
+        "Maria",
+        "maria@email.com",
+        5
+    )
+
+    servico.repo.equipamentos.append(
+        type(
+            servico.repo.equipamentos[0]
+        )(
+            3,
+            "Notebook Extra",
+            True
+        )
+    )
+
+    servico.registrar(
+        3,
+        "Maria",
+        "maria@email.com",
+        5
+    )
+
+    servico.repo.equipamentos.append(
+        type(
+            servico.repo.equipamentos[0]
+        )(
+            4,
+            "Notebook Extra 2",
+            True
+        )
+    )
+
+    resultado = servico.registrar(
+        4,
+        "Maria",
+        "maria@email.com",
+        5
+    )
+
+    assert resultado is False

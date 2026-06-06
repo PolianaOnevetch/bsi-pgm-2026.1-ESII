@@ -32,6 +32,21 @@ class ServicoEmprestimo:
         dias
     ):
 
+        emprestimos_ativos = 0
+
+        for emprestimo in (
+            self.repo.buscar_emprestimos()
+        ):
+
+            if (
+                emprestimo.nome_usuario == nome
+                and not emprestimo.devolvido
+            ):
+                emprestimos_ativos += 1
+
+        if emprestimos_ativos >= 2:
+            return False
+
         equipamento = (
             self.repo.buscar_equipamento(
                 equip_id
