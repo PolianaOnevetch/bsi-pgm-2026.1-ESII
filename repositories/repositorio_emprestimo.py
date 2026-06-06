@@ -1,3 +1,7 @@
+from repositories.interfaces import (
+    InterfaceRepositorioEmprestimo
+)
+
 from models.equipamento import (
     Notebook,
     Projetor,
@@ -5,7 +9,9 @@ from models.equipamento import (
 )
 
 
-class RepositorioEmprestimo:
+class RepositorioEmprestimo(
+    InterfaceRepositorioEmprestimo
+):
 
     def __init__(self):
 
@@ -50,7 +56,9 @@ class RepositorioEmprestimo:
             emprestimo
         )
 
-    def buscar_emprestimos(self):
+    def buscar_emprestimos(
+        self
+    ):
 
         return self.emprestimos
 
