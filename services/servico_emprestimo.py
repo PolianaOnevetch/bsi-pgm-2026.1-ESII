@@ -24,15 +24,12 @@ class ServicoEmprestimo:
         self.repo = repositorio
         self.notificador = notificador
 
-    def registrar(
+    def contar_emprestimos_ativos(
         self,
-        equip_id,
-        nome,
-        email,
-        dias
+        nome
     ):
 
-        emprestimos_ativos = 0
+        total = 0
 
         for emprestimo in (
             self.repo.buscar_emprestimos()
@@ -42,9 +39,24 @@ class ServicoEmprestimo:
                 emprestimo.nome_usuario == nome
                 and not emprestimo.devolvido
             ):
-                emprestimos_ativos += 1
+                total += 1
 
-        if emprestimos_ativos >= 2:
+        return total
+
+    def registrar(
+        self,
+        equip_id,
+        nome,
+        email,
+        dias
+    ):
+
+        if (
+            self.contar_emprestimos_ativos(
+                nome
+            )
+            >= 2
+        ):
             return False
 
         equipamento = (
