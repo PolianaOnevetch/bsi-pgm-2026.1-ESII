@@ -8,7 +8,6 @@ Não é necessário usar termos técnicos neste momento.
 
 ## Minha leitura inicial
 
-Exemplo de entradas:
 - "O código usa variáveis globais (listas de equipamentos e empréstimos) que são acessadas diretamente pela classe. Isso deixa confuso de onde os dados vêm e pode causar problemas se o sistema crescer."
 - "A classe faz muitas coisas ao mesmo tempo, como registrar empréstimo, calcular multa e ainda “enviar e-mail” (print). Fica difícil entender qual é a responsabilidade principal dela."
 - "O cálculo de multa aparece mais de uma vez no código, o que é ruim porque, se precisar mudar a regra, tem que alterar em vários lugares."
