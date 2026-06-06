@@ -19,4 +19,10 @@ Não é necessário usar termos técnicos neste momento.
 
 ## Revisão com vocabulário técnico
 
-*(Este espaço será preenchido após a Aula 4, quando os termos técnicos corretos forem aprendidos)*
+| Descrição em linguagem livre | Termo técnico |
+|---|---|
+| "O código usa variáveis globais que são acessadas diretamente pela classe" |Acoplamento por variável global: a classe Sistema depende diretamente de equipamentos e emprestimos_registrados, permitindo alteração externa do estado e dificultando manutenção |
+| "A classe faz muita coisa ao mesmo tempo" | Baixa coesão: múltiplas responsabilidades (regra de negócio, cálculo e notificação) no mesmo módulo — violação do SRP |
+| "O cálculo de multa aparece mais de uma vez no código" | `Código duplicado: repetição da lógica de cálculo de multa — violação do princípio DRY|
+| "O controle de disponibilidade do equipamento é feito manualmente em vários pontos" |Gerenciamento de estado distribuído: atualização manual do estado em múltiplos pontos, aumentando risco de inconsistência |
+| "Tem mistura de lógica com interface" | Acoplamento entre lógica de negócio e interface |
