@@ -71,3 +71,17 @@ Os testes unitários verificaram comportamentos específicos das classes e méto
 Essa experiência mostrou na prática a importância do requisito RNF04 relacionado à testabilidade. A arquitetura adotada nas aulas anteriores facilitou significativamente a criação dos testes, demonstrando os benefícios da separação de responsabilidades e da inversão de dependências.
 
 Além disso, a configuração do GitHub Actions permitiu automatizar a execução dos testes, garantindo uma verificação contínua da qualidade do código a cada envio para o repositório.
+
+## Aula 09 — TDD e bdd
+
+Durante esta atividade foi possível aplicar na prática o ciclo Red, Green e Refactor.
+
+No kata de cálculo de multa, os testes foram criados antes da implementação. Inicialmente o teste falhou, em seguida foi implementado apenas o código necessário para fazê-lo passar e, por fim, o código foi refatorado para melhorar sua simplicidade sem alterar o comportamento.
+
+Na funcionalidade de limite de empréstimos simultâneos, o processo foi semelhante. Primeiro foi criado um teste representando a regra de negócio, depois a funcionalidade foi implementada e, por último, a lógica foi reorganizada através da extração de métodos para reduzir duplicação e melhorar a legibilidade.
+
+O principal benefício observado no TDD foi a segurança durante alterações no sistema. A suíte de testes permitiu verificar rapidamente se alguma mudança introduzia regressões.
+
+O BDD mostrou uma abordagem complementar. Enquanto o TDD é focado na implementação e validação do código, o BDD ajuda a descrever comportamentos do sistema em uma linguagem mais próxima das regras de negócio e dos usuários.
+
+Considero que TDD e BDD podem ser utilizados juntos: o BDD auxilia na definição dos comportamentos esperados e o TDD garante que esses comportamentos sejam implementados corretamente por meio de testes automatizados.
