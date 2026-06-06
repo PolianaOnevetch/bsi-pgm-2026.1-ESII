@@ -1,4 +1,11 @@
-class Notificador:
+from services.interfaces import (
+    InterfaceNotificador
+)
+
+
+class Notificador(
+    InterfaceNotificador
+):
 
     def notificar_emprestimo(
         self,
