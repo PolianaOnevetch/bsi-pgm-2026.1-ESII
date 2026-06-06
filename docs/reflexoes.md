@@ -59,3 +59,15 @@ Essa mudança não representa apenas uma alteração sintática. Conceitualmente
 Um dos benefícios observados foi a possibilidade de utilizar objetos falsos durante testes. Repositórios simulados e notificadores simulados podem ser utilizados sem necessidade de modificar o código principal do sistema.
 
 Segundo Valente (Capítulo 5), a inversão de dependência reduz acoplamento e aumenta flexibilidade arquitetural. No contexto deste projeto, essa mudança contribui diretamente para o atendimento do RNF04, relacionado à testabilidade isolada das regras de negócio.
+
+## Aula 08 — Testes Automatizados
+
+A implementação dos testes automatizados permitiu verificar o comportamento do sistema de forma mais segura e previsível. Com o uso do pytest foi possível validar regras de negócio sem depender da interface de linha de comando.
+
+A utilização de fixtures ajudou a reduzir duplicação de código entre os testes, enquanto os objetos Fake permitiram isolar dependências externas, facilitando a execução dos cenários de teste.
+
+Os testes unitários verificaram comportamentos específicos das classes e métodos do sistema. Já o teste de integração permitiu validar o fluxo completo de empréstimo e devolução utilizando os componentes em conjunto.
+
+Essa experiência mostrou na prática a importância do requisito RNF04 relacionado à testabilidade. A arquitetura adotada nas aulas anteriores facilitou significativamente a criação dos testes, demonstrando os benefícios da separação de responsabilidades e da inversão de dependências.
+
+Além disso, a configuração do GitHub Actions permitiu automatizar a execução dos testes, garantindo uma verificação contínua da qualidade do código a cada envio para o repositório.
