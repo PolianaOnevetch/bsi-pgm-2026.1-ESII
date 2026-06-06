@@ -172,3 +172,38 @@ def test_usuario_com_dois_emprestimos_ativos_nao_pode_registrar_terceiro(
     )
 
     assert resultado is False
+
+
+def test_usuario_pode_registrar_novo_emprestimo_apos_devolver(
+    servico
+):
+
+    servico.registrar(
+        1,
+        "Maria",
+        "maria@email.com",
+        5
+    )
+
+    servico.registrar_devolucao(
+        1
+    )
+
+    servico.repo.equipamentos.append(
+        type(
+            servico.repo.equipamentos[0]
+        )(
+            3,
+            "Notebook Extra",
+            True
+        )
+    )
+
+    resultado = servico.registrar(
+        3,
+        "Maria",
+        "maria@email.com",
+        5
+    )
+
+    assert resultado is True
