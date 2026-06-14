@@ -215,3 +215,34 @@ Cada camada possui uma responsabilidade específica:
 - Main realiza interação com o usuário.
 
 Essa organização facilita manutenção, evolução e testes isolados, contribuindo diretamente para o atendimento dos requisitos RNF03 e RNF04.
+
+---
+
+# Diagrama Simplificado após Refatoração
+
+```mermaid
+classDiagram
+
+class SistemaDeEmprestimos {
+    +registrar()
+    +registrar_devolucao()
+    +listar_atrasados()
+}
+
+class ServicoEmprestimo
+
+class RepositorioEmprestimo
+
+class Notificador
+
+class FabricaEquipamento {
+    +criar()
+}
+
+SistemaDeEmprestimos --> ServicoEmprestimo
+
+ServicoEmprestimo --> RepositorioEmprestimo
+ServicoEmprestimo --> Notificador
+
+RepositorioEmprestimo --> FabricaEquipamento
+```

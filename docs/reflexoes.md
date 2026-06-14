@@ -85,3 +85,15 @@ O principal benefício observado no TDD foi a segurança durante alterações no
 O BDD mostrou uma abordagem complementar. Enquanto o TDD é focado na implementação e validação do código, o BDD ajuda a descrever comportamentos do sistema em uma linguagem mais próxima das regras de negócio e dos usuários.
 
 Considero que TDD e BDD podem ser utilizados juntos: o BDD auxilia na definição dos comportamentos esperados e o TDD garante que esses comportamentos sejam implementados corretamente por meio de testes automatizados.
+
+## Aula 10 — Factory Method e Facade
+
+Nesta atividade foram aplicados dois padrões de projeto estudados em sala: Factory Method e Facade.
+
+O padrão Factory Method foi utilizado para centralizar a criação dos objetos de equipamento na classe FabricaEquipamento. Antes da refatoração, o repositório dependia diretamente das classes Notebook, Projetor e Cabo. Após a mudança, a criação ficou encapsulada em um único local, reduzindo acoplamento e facilitando futuras extensões.
+
+O padrão Facade foi implementado através da classe SistemaDeEmprestimos. Antes da alteração, o arquivo main.py era responsável por criar e conectar manualmente repositório, notificador e serviço. Com a Facade, o cliente passa a interagir com uma interface simplificada, reduzindo dependências e tornando o código mais organizado.
+
+Entre os benefícios observados estão a melhora na legibilidade, na manutenção e na organização da arquitetura. A principal desvantagem é o aumento do número de classes e arquivos, o que pode tornar projetos pequenos aparentemente mais complexos.
+
+A aplicação desses padrões contribuiu para uma arquitetura mais desacoplada e alinhada aos princípios de orientação a objetos.
