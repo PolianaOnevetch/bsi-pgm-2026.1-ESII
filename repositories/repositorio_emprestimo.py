@@ -2,10 +2,8 @@ from repositories.interfaces import (
     InterfaceRepositorioEmprestimo
 )
 
-from models.equipamento import (
-    Notebook,
-    Projetor,
-    Cabo
+from models.fabrica_equipamento import (
+    FabricaEquipamento
 )
 
 
@@ -16,20 +14,22 @@ class RepositorioEmprestimo(
     def __init__(self):
 
         self.equipamentos = [
-            Notebook(
+            FabricaEquipamento.criar(
+                "notebook",
                 1,
-                "Notebook Dell",
-                True
+                "Notebook Dell"
             ),
-            Projetor(
+
+            FabricaEquipamento.criar(
+                "projetor",
                 2,
-                "Projetor Epson",
-                True
+                "Projetor Epson"
             ),
-            Cabo(
+
+            FabricaEquipamento.criar(
+                "cabo",
                 3,
-                "Cabo HDMI",
-                True
+                "Cabo HDMI"
             )
         ]
 
