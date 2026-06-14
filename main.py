@@ -1,13 +1,5 @@
-from repositories.repositorio_emprestimo import (
-    RepositorioEmprestimo
-)
-
-from services.notificador import (
-    Notificador
-)
-
-from services.servico_emprestimo import (
-    ServicoEmprestimo
+from app.sistema import (
+    SistemaDeEmprestimos
 )
 
 
@@ -22,17 +14,8 @@ def exibir_menu():
 
 def main():
 
-    repositorio = (
-        RepositorioEmprestimo()
-    )
-
-    notificador = (
-        Notificador()
-    )
-
-    servico = ServicoEmprestimo(
-        repositorio,
-        notificador
+    sistema = (
+        SistemaDeEmprestimos()
     )
 
     while True:
@@ -45,7 +28,7 @@ def main():
 
         if opcao == "1":
 
-            sucesso = servico.registrar(
+            sucesso = sistema.registrar(
                 int(
                     input(
                         "ID do equipamento: "
@@ -65,10 +48,13 @@ def main():
             )
 
             if sucesso:
+
                 print(
                     "Empréstimo registrado com sucesso."
                 )
+
             else:
+
                 print(
                     "Equipamento inválido ou indisponível."
                 )
@@ -76,7 +62,7 @@ def main():
         elif opcao == "2":
 
             resultado = (
-                servico.registrar_devolucao(
+                sistema.registrar_devolucao(
                     int(
                         input(
                             "ID do empréstimo: "
@@ -101,7 +87,7 @@ def main():
         elif opcao == "3":
 
             atrasados = (
-                servico.listar_atrasados()
+                sistema.listar_atrasados()
             )
 
             if not atrasados:
