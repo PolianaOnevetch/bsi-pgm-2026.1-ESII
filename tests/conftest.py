@@ -1,5 +1,5 @@
 import pytest
-
+from services.observer import Observer
 from models.fabrica_equipamento import FabricaEquipamento
 from services.servico_emprestimo import (
     ServicoEmprestimo
@@ -91,14 +91,22 @@ class FakeNotificador:
         pass
 
 
+class NotificadorSpy(Observer):
+
+    def __init__(self):
+        self.eventos = []
+
+    def update(self, evento):
+        self.eventos.append(evento)
+
+
 @pytest.fixture
 def servico():
 
     repo = FakeRepositorio()
+    spy = NotificadorSpy()
 
-    notif = FakeNotificador()
+    s = ServicoEmprestimo(repo)
+    s.registrar_observer(spy)
 
-    return ServicoEmprestimo(
-        repo,
-        notif
-    )
+    return s

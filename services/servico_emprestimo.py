@@ -1,33 +1,38 @@
 from datetime import date, timedelta
-
+from services.observer import Subject
+from models import emprestimo
 from models.emprestimo import (
     Emprestimo
 )
 
+import multa
 from repositories.interfaces import (
     InterfaceRepositorioEmprestimo
 )
 
-from services.interfaces import (
-    InterfaceNotificador
-)
-
-
-class ServicoEmprestimo:
+class ServicoEmprestimo(Subject):
 
     def __init__(
         self,
         repositorio: InterfaceRepositorioEmprestimo,
-        notificador: InterfaceNotificador
     ):
-
+        super().__init__()
         self.repo = repositorio
-        self.notificador = notificador
-
+    
+    def registrar(self, equipamento_id, usuario_nome, usuario_email, dias):
+            self.notificar({"tipo": "emprestimo", "email": usuario_email, "data": data_devolucao})
+            return True
+    
+    def devolver(self, emprestimo_id):
+            self.notificar({"tipo": "devolucao", "email": emprestimo.usuario_email, "multa": multa})
+            
+    def listar_atrasados(self):
+            self.notificar({"tipo": "atraso", "email": emprestimo.usuario_email})
+            
     def contar_emprestimos_ativos_usuario(
-        self,
-        nome
-    ):
+                    self,
+                    nome
+                ):
 
         return len(
             [
@@ -92,11 +97,6 @@ class ServicoEmprestimo:
             equip_id
         )
 
-        self.notificador.notificar_emprestimo(
-            email,
-            devolucao
-        )
-
         return True
 
     def registrar_devolucao(
@@ -121,11 +121,6 @@ class ServicoEmprestimo:
 
                 self.repo.marcar_disponivel(
                     emprestimo.equipamento_id
-                )
-
-                self.notificador.notificar_devolucao(
-                    emprestimo.email,
-                    multa
                 )
 
                 return multa
@@ -176,10 +171,6 @@ class ServicoEmprestimo:
 
                 atrasados.append(
                     emprestimo
-                )
-
-                self.notificador.notificar_atraso(
-                    emprestimo.email
                 )
 
         return atrasados

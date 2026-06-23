@@ -1,3 +1,4 @@
+from services.notificador_email import NotificadorEmail
 from repositories.repositorio_emprestimo import (
     RepositorioEmprestimo
 )
@@ -15,20 +16,9 @@ class SistemaDeEmprestimos:
 
     def __init__(self):
 
-        repositorio = (
-            RepositorioEmprestimo()
-        )
-
-        notificador = (
-            Notificador()
-        )
-
-        self.servico = (
-            ServicoEmprestimo(
-                repositorio,
-                notificador
-            )
-        )
+        self._repositorio = RepositorioEmprestimo()
+        self._servico = ServicoEmprestimo(self._repositorio)
+        self._servico.registrar_observer(NotificadorEmail())
 
     def registrar(
         self,
