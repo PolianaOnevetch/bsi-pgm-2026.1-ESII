@@ -1,40 +1,26 @@
-from models.equipamento import (
-    Notebook,
-    Projetor,
-    Cabo
-)
+from models.equipamento import Notebook, Projetor, Cabo
+from models.multa_strategy import MultaPorDia
 
 
 class FabricaEquipamento:
 
-    @staticmethod
-    def criar(
-        tipo,
-        id,
-        nome
-    ):
+    _config = {
+        "notebook": (Notebook, MultaPorDia(10.0)),
+        "projetor": (Projetor, MultaPorDia(15.0)),
+        "cabo": (Cabo, MultaPorDia(2.0)),
+    }
 
-        if tipo == "notebook":
-            return Notebook(
-                id,
-                nome,
-                True
-            )
+    @classmethod
+    def criar(cls, tipo, id, nome):
 
-        if tipo == "projetor":
-            return Projetor(
-                id,
-                nome,
-                True
-            )
+        if tipo not in cls._config:
+            raise ValueError("Tipo inválido")
 
-        if tipo == "cabo":
-            return Cabo(
-                id,
-                nome,
-                True
-            )
+        classe, estrategia = cls._config[tipo]
 
-        raise ValueError(
-            f"Tipo inválido: {tipo}"
+        return classe(
+            id,
+            nome,
+            tipo,
+            estrategia,
         )

@@ -1,11 +1,8 @@
 import pytest
 
+from models.fabrica_equipamento import FabricaEquipamento
 from services.servico_emprestimo import (
     ServicoEmprestimo
-)
-
-from models.equipamento import (
-    Notebook
 )
 
 
@@ -14,12 +11,8 @@ class FakeRepositorio:
     def __init__(self):
 
         self.equipamentos = [
-            Notebook(
-                1,
-                "Notebook",
-                True
-            )
-        ]
+        FabricaEquipamento.criar("notebook", 1, "Notebook")
+]
 
         self.emprestimos = []
 
