@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-
+from models.fabrica_equipamento import FabricaEquipamento
 
 def test_registrar_retorna_true(
     servico
@@ -138,14 +138,12 @@ def test_usuario_com_dois_emprestimos_ativos_nao_pode_registrar_terceiro(
     )
 
     servico.repo.equipamentos.append(
-        type(
-            servico.repo.equipamentos[0]
-        )(
+        FabricaEquipamento.criar(
+            "notebook",
             3,
-            "Notebook Extra",
-            True
-        )
+            "Notebook Extra"
     )
+)
 
     servico.registrar(
         3,
@@ -155,14 +153,20 @@ def test_usuario_com_dois_emprestimos_ativos_nao_pode_registrar_terceiro(
     )
 
     servico.repo.equipamentos.append(
-        type(
-            servico.repo.equipamentos[0]
-        )(
+        FabricaEquipamento.criar(
+            "notebook",
             4,
-            "Notebook Extra 2",
-            True
+            "Notebook Extra 2"
         )
     )
+
+    servico.registrar(
+        4,
+        "Maria",
+        "maria@email.com",
+        5
+    )
+
 
     resultado = servico.registrar(
         4,
@@ -190,17 +194,15 @@ def test_usuario_pode_registrar_novo_emprestimo_apos_devolver(
     )
 
     servico.repo.equipamentos.append(
-        type(
-            servico.repo.equipamentos[0]
-        )(
-            3,
-            "Notebook Extra",
-            True
+        FabricaEquipamento.criar(
+            "notebook",
+            4,
+            "Notebook Extra 2"
         )
     )
 
     resultado = servico.registrar(
-        3,
+        4,
         "Maria",
         "maria@email.com",
         5
