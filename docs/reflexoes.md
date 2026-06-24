@@ -97,3 +97,11 @@ O padrão Facade foi implementado através da classe SistemaDeEmprestimos. Antes
 Entre os benefícios observados estão a melhora na legibilidade, na manutenção e na organização da arquitetura. A principal desvantagem é o aumento do número de classes e arquivos, o que pode tornar projetos pequenos aparentemente mais complexos.
 
 A aplicação desses padrões contribuiu para uma arquitetura mais desacoplada e alinhada aos princípios de orientação a objetos.
+
+## Aula 11 -  Padrões de Projeto: Strategy e Observer
+
+Na Aula 5, o cálculo estava nas subclasses via herança, o que acoplava comportamento ao tipo e dificultava mudanças. Com Strategy, usamos composição, permitindo trocar regras de cálculo em tempo de execução sem alterar as classes principais, o que torna o sistema mais flexível.
+
+O Observer melhora o design ao separar as responsabilidades, agora o serviço apenas emite eventos, enquanto os notificadores reagem a eles. Isso favorece SRP uma vez que terá menos responsabilidades no serviço, o OCP já que agora novos observers podem ser adicionados sem alterar o serviço e DIP com dependência de abstrações, não implementações concretas.
+
+O uso de eventos como dict é um code smell por falta de tipagem e risco de erros em tempo de execução. Mas, foi uma boa decisão para simplificar a implementação e focar no padrão Observer.
