@@ -105,3 +105,11 @@ Na Aula 5, o cálculo estava nas subclasses via herança, o que acoplava comport
 O Observer melhora o design ao separar as responsabilidades, agora o serviço apenas emite eventos, enquanto os notificadores reagem a eles. Isso favorece SRP uma vez que terá menos responsabilidades no serviço, o OCP já que agora novos observers podem ser adicionados sem alterar o serviço e DIP com dependência de abstrações, não implementações concretas.
 
 O uso de eventos como dict é um code smell por falta de tipagem e risco de erros em tempo de execução. Mas, foi uma boa decisão para simplificar a implementação e focar no padrão Observer.
+
+## Aula 12 — Refactoring e Code Smells
+
+A rede de segurança do pytest apareceu no meio do refactoring do Evento, depois de tipar o NotificadorEmail para receber Evento em vez de dict, rodei a suíte e o test_fluxo_completo ficou vermelho, isso aconteceu porque eu só tinha atualizado quem recebe o evento, e servico_emprestimo.py ainda enviava um dict. O erro me mostrou exatamente o passo incompleto: o refactoring precisa ser feito para quem envia e quem recebe para o comportamento continuar o mesmo. Depois de atualizar o serviço para emitir Evento, a suíte voltou a ficar verde. 
+
+Antes disso, também encontrei métodos duplicados em servico_emprestimo.py que faziam o Observer da Aula 11 nunca notificar de verdade, mesmo com os testes passando, porque nenhum teste checava os eventos emitidos. Corrigi isso num commit fix:, separado dos refactor, já que alterei comportamento, não só estrutura.
+
+Sobre o falso positivo: Notebook, Projetor e Cabo ficaram vazias após o Strategy, parecendo Data Class. Mas existem por design, para o sistema saber o tipo do equipamento pelo próprio objeto. Inline Class as dissolveria em Equipamento, forçando de volta um if/elif por tipo, revertendo o OCP conquistado na Aula 11.
