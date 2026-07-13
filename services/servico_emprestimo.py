@@ -142,9 +142,7 @@ class ServicoEmprestimo(Subject):
             dias_atraso
         )
 
-    def listar_atrasados(
-        self
-    ):
+    def listar_atrasados(self):
 
         atrasados = []
 
@@ -152,22 +150,19 @@ class ServicoEmprestimo(Subject):
             self.repo.buscar_emprestimos()
         ):
 
-            if (
-                emprestimo.data_devolucao < date.today() and not emprestimo.devolvido
-            ):
-
-                emprestimo.multa = (
-                    self.calcular_multa(
-                        emprestimo
-                    )
-                )
-
-                self.notificar(
-                    Evento(tipo="atraso", email=emprestimo.email)
-                )
-
-                atrasados.append(
-                    emprestimo
-                )
+            if self._esta_atrasado(emprestimo):
+                self._processar_atraso(emprestimo)
+                atrasados.append(emprestimo)
 
         return atrasados
+
+    def _esta_atrasado(self, emprestimo):
+        return (
+            emprestimo.data_devolucao < date.today() and not emprestimo.devolvido
+        )
+
+    def _processar_atraso(self, emprestimo):
+        emprestimo.multa = self.calcular_multa(emprestimo)
+        self.notificar(
+            Evento(tipo="atraso", email=emprestimo.email)
+        )
