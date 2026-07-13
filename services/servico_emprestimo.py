@@ -30,8 +30,7 @@ class ServicoEmprestimo(Subject):
                 for emprestimo in
                 self.repo.buscar_emprestimos()
                 if (
-                    emprestimo.nome_usuario
-                    == nome
+                    emprestimo.nome_usuario == nome
                     and not emprestimo.devolvido
                 )
             ]
@@ -42,7 +41,7 @@ class ServicoEmprestimo(Subject):
         equip_id,
         nome,
         email,
-        dias
+        dias_emprestimo
     ):
 
         equipamento = (
@@ -67,7 +66,7 @@ class ServicoEmprestimo(Subject):
 
         devolucao = (
             date.today() +
-            timedelta(days=dias)
+            timedelta(days=dias_emprestimo)
         )
 
         emprestimo = Emprestimo(
@@ -103,8 +102,7 @@ class ServicoEmprestimo(Subject):
         ):
 
             if (
-                emprestimo.id == emprestimo_id
-                and not emprestimo.devolvido
+                emprestimo.id == emprestimo_id and not emprestimo.devolvido
             ):
 
                 multa = self.calcular_multa(
@@ -137,8 +135,7 @@ class ServicoEmprestimo(Subject):
         )
 
         dias_atraso = (
-            date.today()
-            - emprestimo.data_devolucao
+            date.today() - emprestimo.data_devolucao
         ).days
 
         return equipamento.calcular_multa(
@@ -156,9 +153,7 @@ class ServicoEmprestimo(Subject):
         ):
 
             if (
-                emprestimo.data_devolucao
-                < date.today()
-                and not emprestimo.devolvido
+                emprestimo.data_devolucao < date.today() and not emprestimo.devolvido
             ):
 
                 emprestimo.multa = (
