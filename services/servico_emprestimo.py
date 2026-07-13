@@ -18,16 +18,6 @@ class ServicoEmprestimo(Subject):
     ):
         super().__init__()
         self.repo = repositorio
-    
-    def registrar(self, equipamento_id, usuario_nome, usuario_email, dias):
-            self.notificar({"tipo": "emprestimo", "email": usuario_email, "data": data_devolucao})
-            return True
-    
-    def devolver(self, emprestimo_id):
-            self.notificar({"tipo": "devolucao", "email": emprestimo.usuario_email, "multa": multa})
-            
-    def listar_atrasados(self):
-            self.notificar({"tipo": "atraso", "email": emprestimo.usuario_email})
             
     def contar_emprestimos_ativos_usuario(
                     self,
@@ -97,6 +87,10 @@ class ServicoEmprestimo(Subject):
             equip_id
         )
 
+        self.notificar(
+            {"tipo": "emprestimo", "email": email, "data": devolucao}
+        )
+
         return True
 
     def registrar_devolucao(
@@ -121,6 +115,10 @@ class ServicoEmprestimo(Subject):
 
                 self.repo.marcar_disponivel(
                     emprestimo.equipamento_id
+                )
+
+                self.notificar(
+                    {"tipo": "devolucao", "email": emprestimo.email, "multa": multa}
                 )
 
                 return multa
@@ -167,6 +165,10 @@ class ServicoEmprestimo(Subject):
                     self.calcular_multa(
                         emprestimo
                     )
+                )
+
+                self.notificar(
+                    {"tipo": "atraso", "email": emprestimo.email}
                 )
 
                 atrasados.append(
