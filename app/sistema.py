@@ -1,10 +1,7 @@
 from services.notificador_email import NotificadorEmail
+
 from repositories.repositorio_emprestimo import (
     RepositorioEmprestimo
-)
-
-from services.notificador import (
-    Notificador
 )
 
 from services.servico_emprestimo import (
@@ -27,7 +24,7 @@ class SistemaDeEmprestimos:
         email,
         dias
     ):
-        return self.servico.registrar(
+        return self._servico.registrar(
             equipamento_id,
             nome,
             email,
@@ -39,8 +36,7 @@ class SistemaDeEmprestimos:
         emprestimo_id
     ):
         return (
-            self.servico
-            .registrar_devolucao(
+            self._servico.registrar_devolucao(
                 emprestimo_id
             )
         )
@@ -49,6 +45,5 @@ class SistemaDeEmprestimos:
         self
     ):
         return (
-            self.servico
-            .listar_atrasados()
+            self._servico.listar_atrasados()
         )
