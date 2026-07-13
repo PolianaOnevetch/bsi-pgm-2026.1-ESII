@@ -1,14 +1,8 @@
-from repositories.repositorio_emprestimo import (
-    RepositorioEmprestimo
-)
+from repositories.repositorio_emprestimo import RepositorioEmprestimo
 
-from services.notificador_email import (
-    NotificadorEmail
-)
+from services.notificador_email import NotificadorEmail
 
-from services.servico_emprestimo import (
-    ServicoEmprestimo
-)
+from services.servico_emprestimo import ServicoEmprestimo
 
 
 def test_fluxo_completo():
@@ -20,12 +14,7 @@ def test_fluxo_completo():
     # 👇 REGISTRA O OBSERVER
     servico.registrar_observer(NotificadorEmail())
 
-    servico.registrar(
-        1,
-        "Ana",
-        "ana@email.com",
-        7
-    )
+    servico.registrar(1, "Ana", "ana@email.com", 7)
 
     multa = servico.registrar_devolucao(1)
 

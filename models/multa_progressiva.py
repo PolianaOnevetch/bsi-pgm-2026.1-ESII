@@ -1,5 +1,4 @@
 class MultaProgressiva:
-
     def calcular(self, dias_atraso):
 
         if dias_atraso <= 0:

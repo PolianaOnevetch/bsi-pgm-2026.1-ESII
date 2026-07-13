@@ -2,18 +2,17 @@ import datetime
 
 # Variáveis globais acessadas diretamente pela classe
 equipamentos = [
-    {"id": 1, "nome": "Notebook Dell",  "tipo": "notebook", "disponivel": True},
-    {"id": 2, "nome": "Projetor Epson", "tipo": "projetor",  "disponivel": True},
-    {"id": 3, "nome": "Cabo HDMI",      "tipo": "cabo",      "disponivel": True},
+    {"id": 1, "nome": "Notebook Dell", "tipo": "notebook", "disponivel": True},
+    {"id": 2, "nome": "Projetor Epson", "tipo": "projetor", "disponivel": True},
+    {"id": 3, "nome": "Cabo HDMI", "tipo": "cabo", "disponivel": True},
 ]
 emprestimos_registrados = []
 
 
 class Sistema:
-
     def registrar(self, equipamento_id, usuario_nome, usuario_email, dias):
         equipamento = None
-        for e in equipamentos:           # acessa variável global diretamente
+        for e in equipamentos:  # acessa variável global diretamente
             if e["id"] == equipamento_id:
                 equipamento = e
                 break
@@ -23,18 +22,18 @@ class Sistema:
             return False
 
         data_emprestimo = datetime.date.today()
-        data_devolucao  = data_emprestimo + datetime.timedelta(days=dias)
+        data_devolucao = data_emprestimo + datetime.timedelta(days=dias)
 
         emprestimo = {
-            "id":               len(emprestimos_registrados) + 1,
-            "equipamento_id":   equipamento_id,
+            "id": len(emprestimos_registrados) + 1,
+            "equipamento_id": equipamento_id,
             "equipamento_nome": equipamento["nome"],
-            "tipo":             equipamento["tipo"],
-            "usuario_nome":     usuario_nome,
-            "usuario_email":    usuario_email,
-            "data_emprestimo":  data_emprestimo,
-            "data_devolucao":   data_devolucao,
-            "devolvido":        False,
+            "tipo": equipamento["tipo"],
+            "usuario_nome": usuario_nome,
+            "usuario_email": usuario_email,
+            "data_emprestimo": data_emprestimo,
+            "data_devolucao": data_devolucao,
+            "devolvido": False,
         }
         emprestimos_registrados.append(emprestimo)
         equipamento["disponivel"] = False
@@ -55,7 +54,7 @@ class Sistema:
             return
 
         emprestimo["devolvido"] = True
-        hoje   = datetime.date.today()
+        hoje = datetime.date.today()
         atraso = (hoje - emprestimo["data_devolucao"]).days
 
         # cálculo de multa com if/elif — violação de OCP
@@ -108,7 +107,7 @@ def main():
                 int(input("ID equipamento: ")),
                 input("Nome: "),
                 input("Email: "),
-                int(input("Dias: "))
+                int(input("Dias: ")),
             )
         elif op == "2":
             s.devolver(int(input("ID empréstimo: ")))

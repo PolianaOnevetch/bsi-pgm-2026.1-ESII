@@ -1,6 +1,4 @@
-from app.sistema import (
-    SistemaDeEmprestimos
-)
+from app.sistema import SistemaDeEmprestimos
 
 
 def exibir_menu():
@@ -14,121 +12,59 @@ def exibir_menu():
 
 def main():
 
-    sistema = (
-        SistemaDeEmprestimos()
-    )
+    sistema = SistemaDeEmprestimos()
 
     while True:
-
         exibir_menu()
 
-        opcao = input(
-            "Escolha uma opção: "
-        )
+        opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
-
             sucesso = sistema.registrar(
-                int(
-                    input(
-                        "ID do equipamento: "
-                    )
-                ),
-                input(
-                    "Nome do usuário: "
-                ),
-                input(
-                    "Email: "
-                ),
-                int(
-                    input(
-                        "Quantidade de dias: "
-                    )
-                )
+                int(input("ID do equipamento: ")),
+                input("Nome do usuário: "),
+                input("Email: "),
+                int(input("Quantidade de dias: ")),
             )
 
             if sucesso:
-
-                print(
-                    "Empréstimo registrado com sucesso."
-                )
+                print("Empréstimo registrado com sucesso.")
 
             else:
-
-                print(
-                    "Equipamento inválido ou indisponível."
-                )
+                print("Equipamento inválido ou indisponível.")
 
         elif opcao == "2":
-
-            resultado = (
-                sistema.registrar_devolucao(
-                    int(
-                        input(
-                            "ID do empréstimo: "
-                        )
-                    )
-                )
-            )
+            resultado = sistema.registrar_devolucao(int(input("ID do empréstimo: ")))
 
             if resultado is None:
-
-                print(
-                    "Empréstimo inválido ou já devolvido."
-                )
+                print("Empréstimo inválido ou já devolvido.")
 
             else:
-
-                print(
-                    f"Devolução registrada. "
-                    f"Multa: R$ {resultado:.2f}"
-                )
+                print(f"Devolução registrada. Multa: R$ {resultado:.2f}")
 
         elif opcao == "3":
-
-            atrasados = (
-                sistema.listar_atrasados()
-            )
+            atrasados = sistema.listar_atrasados()
 
             if not atrasados:
-
-                print(
-                    "Nenhum empréstimo em atraso."
-                )
+                print("Nenhum empréstimo em atraso.")
 
             else:
-
-                print(
-                    "\nEmpréstimos em atraso:"
-                )
+                print("\nEmpréstimos em atraso:")
 
                 for emprestimo in atrasados:
+                    print(f"Usuário: {emprestimo.nome_usuario}")
 
-                    print(
-                        f"Usuário: "
-                        f"{emprestimo.nome_usuario}"
-                    )
-
-                    print(
-                        f"Multa: "
-                        f"R$ {emprestimo.multa:.2f}"
-                    )
+                    print(f"Multa: R$ {emprestimo.multa:.2f}")
 
                     print("-" * 30)
 
         elif opcao == "0":
-
-            print(
-                "Encerrando sistema..."
-            )
+            print("Encerrando sistema...")
 
             break
 
         else:
-
-            print(
-                "Opção inválida."
-            )
+            print("Opção inválida.")
 
 
 if __name__ == "__main__":

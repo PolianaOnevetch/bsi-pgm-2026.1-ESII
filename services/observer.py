@@ -3,14 +3,12 @@ from services.evento import Evento
 
 
 class Observer(ABC):
-
     @abstractmethod
     def update(self, evento: Evento) -> None:
         pass
 
 
 class Subject:
-
     def __init__(self):
         self._observers: list[Observer] = []
 

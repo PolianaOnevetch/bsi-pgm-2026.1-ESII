@@ -3,7 +3,6 @@ from models.multa_strategy import MultaPorDia
 
 
 class FabricaEquipamento:
-
     _config = {
         "notebook": (Notebook, MultaPorDia(10.0)),
         "projetor": (Projetor, MultaPorDia(15.0)),
