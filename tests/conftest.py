@@ -1,6 +1,7 @@
 import pytest
 from services.observer import Observer
 from models.fabrica_equipamento import FabricaEquipamento
+from services.evento import Evento
 from services.servico_emprestimo import (
     ServicoEmprestimo
 )
@@ -96,7 +97,7 @@ class NotificadorSpy(Observer):
     def __init__(self):
         self.eventos = []
 
-    def update(self, evento):
+    def update(self, evento: Evento):
         self.eventos.append(evento)
 
 
@@ -108,5 +109,6 @@ def servico():
 
     s = ServicoEmprestimo(repo)
     s.registrar_observer(spy)
+    s.spy = spy
 
     return s

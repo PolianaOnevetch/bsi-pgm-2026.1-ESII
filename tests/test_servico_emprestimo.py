@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from models.fabrica_equipamento import FabricaEquipamento
+from services.evento import Evento
 
 def test_registrar_retorna_true(
     servico
@@ -209,3 +210,58 @@ def test_usuario_pode_registrar_novo_emprestimo_apos_devolver(
     )
 
     assert resultado is True
+
+def test_registrar_notifica_evento_emprestimo(servico):
+
+    servico.registrar(
+        1,
+        "Ana",
+        "ana@email.com",
+        7
+    )
+
+    assert len(servico.spy.eventos) == 1
+
+    evento = servico.spy.eventos[0]
+
+    assert isinstance(evento, Evento)
+    assert evento.tipo == "emprestimo"
+    assert evento.email == "ana@email.com"
+
+def test_registrar_devolucao_notifica_evento_devolucao(servico):
+
+    servico.registrar(
+        1,
+        "Ana",
+        "ana@email.com",
+        7
+    )
+
+    servico.registrar_devolucao(1)
+
+    evento = servico.spy.eventos[-1]
+
+    assert isinstance(evento, Evento)
+    assert evento.tipo == "devolucao"
+    assert evento.email == "ana@email.com"
+    assert evento.multa == 0
+
+def test_listar_atrasados_notifica_evento_atraso(servico):
+
+    servico.registrar(
+        1,
+        "Ana",
+        "ana@email.com",
+        7
+    )
+
+    emprestimo = servico.repo.buscar_emprestimos()[0]
+    emprestimo.data_devolucao = date.today() - timedelta(days=2)
+
+    servico.listar_atrasados()
+
+    evento = servico.spy.eventos[-1]
+
+    assert isinstance(evento, Evento)
+    assert evento.tipo == "atraso"
+    assert evento.email == "ana@email.com"

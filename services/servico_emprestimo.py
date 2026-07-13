@@ -1,10 +1,10 @@
 from datetime import date, timedelta
 from services.observer import Subject
 from models import emprestimo
+from services.evento import Evento
 from models.emprestimo import (
     Emprestimo
 )
-
 import multa
 from repositories.interfaces import (
     InterfaceRepositorioEmprestimo
@@ -88,7 +88,7 @@ class ServicoEmprestimo(Subject):
         )
 
         self.notificar(
-            {"tipo": "emprestimo", "email": email, "data": devolucao}
+            Evento(tipo="emprestimo", email=email, data=devolucao)
         )
 
         return True
@@ -118,9 +118,9 @@ class ServicoEmprestimo(Subject):
                 )
 
                 self.notificar(
-                    {"tipo": "devolucao", "email": emprestimo.email, "multa": multa}
+                    Evento(tipo="devolucao", email=emprestimo.email, multa=multa)
                 )
-
+                
                 return multa
 
         return None
@@ -168,7 +168,7 @@ class ServicoEmprestimo(Subject):
                 )
 
                 self.notificar(
-                    {"tipo": "atraso", "email": emprestimo.email}
+                    Evento(tipo="atraso", email=emprestimo.email)
                 )
 
                 atrasados.append(
