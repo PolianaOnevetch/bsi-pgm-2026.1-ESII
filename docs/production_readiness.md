@@ -31,8 +31,8 @@
 
 | Item | Status | Esforço | Prioridade | Observação |
 |---|---|---|---|---|
-| Credenciais fora do código | ✅ OK | 2-3h | alta | O sistema não usa nenhuma credencial por que não há login ou BD externo |
-| Entradas validadas | ⚠️ PARCIAL | 1 dia | média | Há validação de equipamento existente/disponível e limite de empréstimos por usuário, mas não há validação do formato de e-mail |
+| Credenciais fora do código | ✅ OK | feito | alta | O sistema não usa nenhuma credencial por que não há login ou BD externo |
+| Entradas validadas | ⚠️ PARCIAL | 1 dia | alta | Há validação de equipamento existente/disponível e limite de empréstimos por usuário, mas não há validação do formato de e-mail |
 | Dependências fixadas | ✅ OK | feito | média | `requirements-dev.txt` com `pytest>=8.0`, `pytest-cov>=4.1`, `ruff>=0.5` desde a Aula 13 |
 | Dependências auditadas | ❌ FALTA | 2-3h | média | Nenhuma ferramenta de auditoria de vulnerabilidades está configurada no CI |
 
@@ -49,6 +49,18 @@
 
 | Item | Status | Esforço | Prioridade | Observação |
 |---|---|---|---|---|
-| Existe processo de deploy | ❌ FALTA | 1-2 dias | alta | O sistema roda só localmente não há deploy nenhum |
-| Como uma versão nova chegaria ao usuário | ❌ FALTA | 2-3h | alta | Para entregar uma versão nova o usuário puxar o código do GitHub e rodar manualmente, não existe empacotamento então cada atualização depende de acesso direto ao repositório |
-| Plano de rollback | ❌ FALTA | 6-8h | alta | Não tem nenhum procedimento para voltar a uma versão anterior em casos de falha pois não há deploy |
+| Existe processo de deploy | ❌ FALTA | 1-2 dias | baixo | O sistema roda só localmente não há deploy nenhum |
+| Como uma versão nova chegaria ao usuário | ❌ FALTA | 2-3h | baixo | Para entregar uma versão nova o usuário puxar o código do GitHub e rodar manualmente, não existe empacotamento então cada atualização depende de acesso direto ao repositório |
+| Plano de rollback | ❌ FALTA | 6-8h | baixo | Não tem nenhum procedimento para voltar a uma versão anterior em casos de falha pois não há deploy |
+
+## Síntese executiva
+
+Atacaria primeiro a Persistência, porque é a dependência que trava praticamente todo o resto do checklist. Hoje, `RepositorioEmprestimo` guarda tudo em listas na memória (`self.emprestimos`, `self.equipamentos`), e cada execução de `python main.py` começa do zero, é um risco alto com perda total de dados a cada fechamento e esforço estimado de 2-3 dias. Além de ser um pré-requisito direto para o item de Observabilidade "dá para investigar uma falha de ontem", também marcado como alta prioridade, sem dados persistidos, não há o que investigar, mesmo com logs perfeitos. Um ponto a favor: a interface `InterfaceRepositorioEmprestimo` já isola essa responsabilidade, então trocar a implementação por SQLite, por exemplo, não deveria exigir mudar `ServicoEmprestimo` nem os testes que já existem.
+
+Em segundo lugar, atacaria a validação de entradas (Segurança)pois é barato, levando cerca de um dia, independente das outras categorias, e reduz risco imediato de dados inconsistentes entrarem no sistema,hoje `registrar()` valida equipamento e limite de empréstimos, mas não valida formato de e-mail nem dias negativos ou zero.
+
+Terceiro, logs com nível (Observabilidade), que só passa a fazer sentido de verdade depois da Persistência, com dados salvos, logs estruturados permitem cruzar o que o sistema fez com o que ficou gravado, fechando um ciclo que hoje é impossível, já que a saída atual é só `print()` no console, sem nível nem destino configurável.
+
+A ordem inversa seria pior: investir em Containerização ou Deployment antes de resolver Persistência significaria empacotar bonito um sistema que ainda perde dados — Valente (Cap. 10) trata automação de entrega de algo que ainda não está pronto para produção como inverter o problema real, gerando falsa sensação de prontidão.
+
+Deixaria Deployment para o final, por ser um projeto acadêmico sem usuário externo hoje, o risco de adiar é baixo, e só faz sentido definir um processo de entrega depois que houver algo persistente e observável de fato para entregar.
