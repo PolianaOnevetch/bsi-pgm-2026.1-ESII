@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+
 from models.fabrica_equipamento import FabricaEquipamento
 from services.evento import Evento
 

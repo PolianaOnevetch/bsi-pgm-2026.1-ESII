@@ -1,7 +1,5 @@
 from repositories.repositorio_emprestimo import RepositorioEmprestimo
-
 from services.notificador_email import NotificadorEmail
-
 from services.servico_emprestimo import ServicoEmprestimo
 
 

@@ -1,6 +1,5 @@
-from repositories.interfaces import InterfaceRepositorioEmprestimo
-
 from models.fabrica_equipamento import FabricaEquipamento
+from repositories.interfaces import InterfaceRepositorioEmprestimo
 
 
 class RepositorioEmprestimo(InterfaceRepositorioEmprestimo):

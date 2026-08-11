@@ -1,7 +1,8 @@
 import pytest
-from services.observer import Observer
+
 from models.fabrica_equipamento import FabricaEquipamento
 from services.evento import Evento
+from services.observer import Observer
 from services.servico_emprestimo import ServicoEmprestimo
 
 

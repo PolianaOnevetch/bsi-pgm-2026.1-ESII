@@ -1,5 +1,7 @@
 from datetime import date, timedelta
+
 from app.sistema import SistemaDeEmprestimos
+
 
 def test_registrar_retorna_true():
     sistema = SistemaDeEmprestimos()

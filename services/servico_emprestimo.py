@@ -1,8 +1,9 @@
 from datetime import date, timedelta
-from services.observer import Subject
-from services.evento import Evento
+
 from models.emprestimo import Emprestimo
 from repositories.interfaces import InterfaceRepositorioEmprestimo
+from services.evento import Evento
+from services.observer import Subject
 
 
 class ServicoEmprestimo(Subject):

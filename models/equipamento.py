@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 from models.multa_strategy import MultaStrategy
 
 
